@@ -11,4 +11,10 @@ func main() {
 	testSlice.ForEach(func(x int) {
 		fmt.Println(x)
 	})
+
+	testAny := slice.ANY{1, 3, "abc"}
+
+	testAny.ForEach(func(x interface{}) {
+		fmt.Println((x))
+	})
 }

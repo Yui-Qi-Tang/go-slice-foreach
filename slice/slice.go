@@ -9,3 +9,13 @@ func (i IntSlice) ForEach(f func(v int)) {
 		f(v)
 	}
 }
+
+// ANY slice ANY type
+type ANY []interface{}
+
+// ForEach comment for foreach
+func (a ANY) ForEach(f func(v interface{})) {
+	for _, v := range a {
+		f(v)
+	}
+}
