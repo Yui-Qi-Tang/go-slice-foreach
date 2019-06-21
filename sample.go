@@ -7,14 +7,34 @@ import (
 )
 
 func main() {
+
 	testSlice := slice.IntSlice{1, 3, 2, 4, 5, 6}
+	fmt.Println("Int slice forEach:", testSlice)
 	testSlice.ForEach(func(x int) {
-		fmt.Println(x)
+		fmt.Println("Just print =>", x)
 	})
+
+	do := func(x interface{}) {
+		fmt.Println(x)
+	}
 
 	testAny := slice.ANY{1, 3, "abc"}
+	fmt.Println("ANY(interface{}):", testAny, "foreach")
+	testAny.ForEach(do)
 
-	testAny.ForEach(func(x interface{}) {
-		fmt.Println((x))
-	})
+	fmt.Println("ANY(interface{}) slice Map(f: square(x) where x is int)")
+	var square slice.ANYMapF = func(v interface{}) interface{} {
+		switch v.(type) {
+		case int:
+			return v.(int) * v.(int)
+		default:
+			return nil
+		}
+	}
+
+	integers := slice.ANY{1, 2, 3, 4, 5}
+	// map
+	newIntegers := integers.Map(square)
+	// foreach
+	newIntegers.ForEach(do)
 }
