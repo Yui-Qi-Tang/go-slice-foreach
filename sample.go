@@ -22,7 +22,6 @@ func main() {
 	fmt.Println("ANY(interface{}):", testAny, "foreach")
 	testAny.ForEach(do)
 
-	fmt.Println("ANY(interface{}) slice Map(f: square(x) where x is int)")
 	var square slice.ANYMapF = func(v interface{}) interface{} {
 		switch v.(type) {
 		case int:
@@ -32,13 +31,14 @@ func main() {
 		}
 	}
 
-	integers := slice.ANY{1, 2, 3, 4, 5}
+	integers := slice.ANY{1, 2, 3, 4, "gg", 5}
+	fmt.Println("ANY(interface{}) slice Map(f: square(x) where x is int)", integers)
 	// map
 	newIntegers := integers.Map(square)
 	// foreach
 	newIntegers.ForEach(do)
 
-	var checkIfInt slice.ANYFilterF = func(v interface{}) bool {
+	var notInt slice.ANYFilterF = func(v interface{}) bool {
 		switch v.(type) {
 		case int:
 			return true
@@ -48,6 +48,6 @@ func main() {
 	}
 
 	// filter
-	fmt.Println("Check if int in testAny", testAny, testAny.Filter(checkIfInt))
+	fmt.Println("Check if int in testAny", testAny, testAny.Filter(notInt))
 
 }

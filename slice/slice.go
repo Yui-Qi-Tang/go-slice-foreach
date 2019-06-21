@@ -35,11 +35,13 @@ func (a ANY) Map(f ANYMapF) (r ANY) {
 	return
 }
 
-// Filter check if the f(v) is true or false and return check result
+// Filter return new ANY without f(v) is false
 // need to return ANY?
-func (a ANY) Filter(f ANYFilterF) (r []bool) {
+func (a ANY) Filter(f ANYFilterF) (r ANY) {
 	for _, v := range a {
-		r = append(r, f(v))
+		if f(v) {
+			r = append(r, v)
+		}
 	}
 
 	return
