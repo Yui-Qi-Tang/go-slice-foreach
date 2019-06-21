@@ -46,3 +46,10 @@ func (a ANY) Filter(f ANYFilterF) (r ANY) {
 
 	return
 }
+
+type ANYReduceF func(x, y interface{}) interface{}
+type ANYRecusive func(x interface{}, y ANY) // Fold here?
+
+func (a ANY) Reduce(f ANYReduceF) {
+	// build a tree for folding?
+}
