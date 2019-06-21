@@ -37,4 +37,17 @@ func main() {
 	newIntegers := integers.Map(square)
 	// foreach
 	newIntegers.ForEach(do)
+
+	var checkIfInt slice.ANYFilterF = func(v interface{}) bool {
+		switch v.(type) {
+		case int:
+			return true
+		default:
+			return false
+		}
+	}
+
+	// filter
+	fmt.Println("Check if int in testAny", testAny, testAny.Filter(checkIfInt))
+
 }

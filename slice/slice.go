@@ -13,8 +13,11 @@ func (i IntSlice) ForEach(f func(v int)) {
 // ANY slice ANY type
 type ANY []interface{}
 
-//ANYMapF function template for any slice map
+//ANYMapF function signature for any slice map
 type ANYMapF func(v interface{}) interface{}
+
+//ANYFilterF function signature for any slice filter
+type ANYFilterF func(v interface{}) bool
 
 // ForEach comment for foreach
 func (a ANY) ForEach(f func(v interface{})) {
@@ -26,8 +29,17 @@ func (a ANY) ForEach(f func(v interface{})) {
 // Map do f on each element of ANY slice and return new ANY slice
 func (a ANY) Map(f ANYMapF) (r ANY) {
 	for _, v := range a {
-		newV := f(v)
-		r = append(r, newV)
+		r = append(r, f(v))
+	}
+
+	return
+}
+
+// Filter check if the f(v) is true or false and return check result
+// need to return ANY?
+func (a ANY) Filter(f ANYFilterF) (r []bool) {
+	for _, v := range a {
+		r = append(r, f(v))
 	}
 
 	return
