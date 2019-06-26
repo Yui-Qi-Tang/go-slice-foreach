@@ -24,6 +24,10 @@ var notInt slice.ANYFilterF = func(v interface{}) bool {
 	}
 }
 
+func print(x interface{}) {
+	fmt.Println(x)
+}
+
 func main() {
 
 	testSlice := slice.IntSlice{1, 3, 2, 4, 5, 6}
@@ -32,18 +36,14 @@ func main() {
 		fmt.Println("Just print =>", x)
 	})
 
-	do := func(x interface{}) {
-		fmt.Println(x)
-	}
-
 	testAny := slice.ANY{1, 3, "abc"}
 	fmt.Println("ANY(interface{}):", testAny, "foreach")
-	testAny.ForEach(do)
+	testAny.ForEach(print)
 
 	integers := slice.ANY{1, 2, 3, 4, "gg", 5}
 	fmt.Println("ANY(interface{}) slice Map(f: square(x) where x is int)", integers)
 	// filter not int -> square for each element -> foreach print
-	integers.Filter(notInt).Map(square).ForEach(do)
+	integers.Filter(notInt).Map(square).ForEach(print)
 
 	// filter
 	fmt.Println("Check if int in testAny", testAny, testAny.Filter(notInt))
